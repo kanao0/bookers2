@@ -1,3 +1,28 @@
-<h1>Books#index</h1>
-みんなの投稿した本一覧
-Books押すとここ
+<div>User info</div>
+
+
+
+<div>New book</div>
+
+   <!--indexアクションで作ったデータを入れる箱、空っぽなので送信すると自動的にcreate処理にいく-->
+  <%= form_with model: @book, url: '/books', method: :post do |f| %>
+  
+    <div>Title</div>
+    <%= f.text_field :title %>
+  
+    <div>Opinion</div>
+    <%= f.text_area :opinion %>
+  
+    <div><%= f.submit 'Create Book' %></div>
+  <% end %>
+  
+  <!--エラーあったら？？？-->
+  <!--  <　% if @book.errors.any? %>-->
+  <!--  <　%= @book.errors.count %>error prohibited this book from being saved:-->
+  <!--  <ul>-->
+  <!--    <　% @book.errors.full_messages.each do |message| %>-->
+  <!--      <li>< %= message %></li>-->
+  <!--    <　% end %>-->
+  <!--  </ul>-->
+  <!--<　% end %>-->
+  

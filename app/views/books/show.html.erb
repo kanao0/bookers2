@@ -1,2 +1,16 @@
-Books詳細ページ
-create bookしたらこのページに行く！
+<div>Book detail</div>
+
+  
+<div>
+  <%= @book.title %>
+</div>
+  
+<div>
+  <%= @book.opinion %>
+</div>
+
+<!--showアクションで探してきたデータ編集する？edit(編集画面へ)-->
+<div><%= link_to "Edit", edit_book_path(@book.id) %></div>
+<!--Destroy(削除)-->
+<!--本当に消しますか？→-->
+<div><%= link_to "Destroy" , books_path %></div>
