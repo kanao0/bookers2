@@ -12,21 +12,43 @@
 
   <body>
     <header>
-        ログインしてるとき表示
+      
+        <!--ログインしてるとき表示-->
+      <h1><%= link_to "Bookers", root_path %></h1>  
       <% if user_signed_in? %>
         <li>
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+          <%= link_to "Home", user_path(current_user) %>
+        </li>      
+        <li>
+          <%= link_to "Users", users_path %>
+        </li>      
+        <li>
+          <%= link_to "Books", books_path %>
         </li>
-        ログインしてないときに表示
+        <li>
+          <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+        </li>        
+        
+        <!--ログインしてないときに表示-->
       <% else %>
         <li>
-          <%= link_to "新規登録", new_user_registration_path %>
+          <%= link_to "Home", root_path %>
+        </li>      
+        <li>
+          <%= link_to "About", home_about_path %>
+        </li>      
+        <li>
+          <%= link_to "Sign up", new_user_registration_path %>
         </li>
         <li>
-          <%= link_to "ログイン", new_user_session_path %>
+          <%= link_to "Log in", new_user_session_path %>
         </li>
       <% end %>
-    </header>    
+    </header> 
+    
     <%= yield %>
+    
+    <footer>CopyRight Infratop.inc</footer>
+    
   </body>
 </html>
