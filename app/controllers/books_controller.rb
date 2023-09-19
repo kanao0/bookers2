@@ -1,16 +1,15 @@
 class BooksController < ApplicationController
-  # def new
-  # end
   
   def index
     # 新規投稿のデータを入れるための箱を作る名前は@book
     @book = Book.new
+    # ブックの情報持ってきて
+    @books = Book.all  
   end
 
   def create
     # 新規投稿フォームで入力されたデータが@bookに入る
     @book = Book.new(book_params)
-    # 投稿したユーザーが誰か
     @book.user_id = current_user.id
     @book.save
     redirect_to book_path(@book.id)
@@ -18,8 +17,25 @@ class BooksController < ApplicationController
   
   
   def show
-    # Bookモデルのデータみつけてきて～データの箱は@bookって名前にしたよ
-    @book = Book.find(params[:id])    
+    # Bookモデルのデータ探すデータの箱は@bookって名前にしたよ
+    @book = Book.find(params[:id])  
+  end
+   
+  def edit
+    @book = Book.find(params[:id])
+  end
+  
+  def update
+    book = Book.find(params[:id])
+    book.update(book_params)
+    redirect_to book_path(book.id)  
+  end 
+  
+  def destroy
+    book = Book.find(params[:id])  # データ（レコード）を1件取得
+    # 探してきたデータ（レコード）を削除
+    book.destroy  
+    redirect_to books_path  # 投稿一覧画面へリダイレクト    
   end
    
     private
@@ -27,20 +43,4 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
-  
 end
-
-
-# def create
-#     # データを保存するための箱を作る名前は@book
-#     @book = Book.new(book_params)
-
-#     if @book.save
-
-#       redirect_to book_path(@book.id)
-#       flash[:notice] = "You have created book successfully."    
-#     else
-#       @books = Book.all
-#       render :index
-  #   end
-  # end

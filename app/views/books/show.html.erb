@@ -1,6 +1,7 @@
 <div>Book detail</div>
 
-  
+  <%= image_tag @book.user.get_profile_image(100,100) %>
+  <%= @book.user.name %>
 <div>
   <%= @book.title %>
 </div>
@@ -9,8 +10,10 @@
   <%= @book.body %>
 </div>
 
+<!--ログインユーザーのときはこれ表示↓-->
 <!--showアクションで探してきたデータ編集する？edit(編集画面へ)-->
 <div><%= link_to "Edit", edit_book_path(@book.id) %></div>
 <!--Destroy(削除)-->
 <!--本当に消しますか？→-->
-<div><%= link_to "Destroy" , books_path %></div>
+<div><%= link_to "Destroy", book_path(@book.id), method: :delete, "data-confirm" => "本当に消しますか？" %></div>
+

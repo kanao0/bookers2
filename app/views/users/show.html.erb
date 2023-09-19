@@ -1,3 +1,24 @@
-user詳細ページ
-ログインしたらこのページ
+user詳細ページ個人のページ
+ログインしたらここ！
 HOME押すとここ
+<h1>User info</h1>
+<%= image_tag @user.get_profile_image(100,100) %>
+
+<table>
+  <tbody>
+    <tr>
+      <th>name</th>
+      <th><%= @user.name %></th>
+    </tr>
+    <tr>
+      <th>introduction</th>
+      <th><%= @user.introduction %></th>
+    </tr>
+  </tbody>
+</table>
+
+<div>ユーザー編集へ↓
+  <%= link_to edit_user_path(@user.id) do %>
+    <i class="fa-solid fa-user-gear"></i>
+  <% end %>
+</div>  
