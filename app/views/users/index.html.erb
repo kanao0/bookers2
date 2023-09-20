@@ -1,6 +1,23 @@
 user一覧
 Users押すとここ
 
+
+
+
+
+<h2>New book</h2>
+   <!--indexアクションで作ったデータを入れる箱、空っぽなので送信すると自動的にcreate処理にいく-->
+  <%= form_with model: @book, url: '/books', method: :post do |f| %>
+  
+    <div>Title</div>
+    <%= f.text_field :title %>
+  
+    <div>Opinion</div>
+    <%= f.text_area :body %>
+  
+    <div><%= f.submit 'Create Book' %></div>
+  <% end %>
+
   <h2>Users</h2>
   <table>
     <thead>
@@ -14,10 +31,8 @@ Users押すとここ
  
     <% @users.each do |user| %>
       <tr>
-        <!--image_tag写真,↑book.user,bookの中の投稿者の情報もってきてるget_profile_image(100,100)表示メソッド-->
-        <td><! %= image_tag get_profile_image %></td>
+        <td><%= image_tag user.get_profile_image(100,100) %></td>
         <td><%= user.name %></td>
-        <!--一番上しかリンクできない???ログイン後の画像の不備と関係あり?-->
         <td><%= link_to "Show", user_path(user.id) %></td>
       </tr>
     <% end %>
@@ -28,17 +43,3 @@ Users押すとここ
 
 
 
-
-
-<div>New book</div>
-   <!--indexアクションで作ったデータを入れる箱、空っぽなので送信すると自動的にcreate処理にいく-->
-  <%= form_with model: @book, url: '/books', method: :post do |f| %>
-  
-    <div>Title</div>
-    <%= f.text_field :title %>
-  
-    <div>Opinion</div>
-    <%= f.text_area :body %>
-  
-    <div><%= f.submit 'Create Book' %></div>
-  <% end %>

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   def index
+    
     # ユーザーの情報もってこい
     @users = User.all
     # 新規投稿のための箱
@@ -7,6 +8,8 @@ class UsersController < ApplicationController
   end
   
   def show
+    @book = Book.new
+    @books = Book.all
     # ユーザーの情報探してきて
     @user = User.find(params[:id])
   end

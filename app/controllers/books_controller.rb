@@ -4,7 +4,7 @@ class BooksController < ApplicationController
     # 新規投稿のデータを入れるための箱を作る名前は@book
     @book = Book.new
     # ブックの情報持ってきて
-    @books = Book.all  
+    @books = Book.all
   end
 
   def create
@@ -17,8 +17,13 @@ class BooksController < ApplicationController
   
   
   def show
+    # ☆★★☆
+   # 新規投稿のための空箱
+    @book = Book.new
+
     # Bookモデルのデータ探すデータの箱は@bookって名前にしたよ
-    @book = Book.find(params[:id])  
+    @book = Book.find(params[:id])
+
   end
    
   def edit
