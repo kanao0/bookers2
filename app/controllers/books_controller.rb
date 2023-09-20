@@ -1,51 +1,69 @@
 class BooksController < ApplicationController
-  
+
   def index
-    # 新規投稿のデータを入れるための箱を作る名前は@book
     @book = Book.new
-    # ブックの情報持ってきて
+    # ログインしてるユーザーの情報これはUserinfoで使う
+    @user = current_user
     @books = Book.all
   end
 
   def create
-    # 新規投稿フォームで入力されたデータが@bookに入る
+    # 新規投稿フォームで入力されたデータが@bookに入るデータ入れてあげる
+    # title,bodyのデータだけ
     @book = Book.new(book_params)
+    # ユーザーと紐付けしてるから誰が投稿したかの情報も一緒に入れてあげる
     @book.user_id = current_user.id
-    @book.save
-    redirect_to book_path(@book.id)
+    # saveできると投稿したものに対してidがふられる
+    # 保存したデータのidの詳細ページにいく
+    if @book.save
+      flash[:notice] = "You have created book successfully."
+      redirect_to book_path(@book.id)  
+    else
+      # ログインしてるユーザーの情報これはUserinfoで使う
+      @user = current_user
+      @books = Book.all
+      render :index
+    end
   end
-  
-  
+
+
   def show
-    # ☆★★☆
-   # 新規投稿のための空箱
-    @book = Book.new
-
-    # Bookモデルのデータ探すデータの箱は@bookって名前にしたよ
+    # ログインしてるユーザーの情報＊これはUserinfoで使う
+    @user = current_user
+    # @bookふたつになるから@book_new部分テンプレは大丈夫
+    @book_new = Book.new
+    # 今のURLの中のIDの情報持ってきてね
     @book = Book.find(params[:id])
-
   end
-   
+
   def edit
+    # 今のURLの中のIDの情報持ってきてね
     @book = Book.find(params[:id])
   end
-  
+
   def update
-    book = Book.find(params[:id])
-    book.update(book_params)
-    redirect_to book_path(book.id)  
-  end 
-  
-  def destroy
-    book = Book.find(params[:id])  # データ（レコード）を1件取得
-    # 探してきたデータ（レコード）を削除
-    book.destroy  
-    redirect_to books_path  # 投稿一覧画面へリダイレクト    
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      flash[:notice] = "You have updated book successfully."
+      redirect_to book_path(@book.id)
+    else
+      render :edit
+    end
   end
-   
+
+  def destroy
+    # 今のURLの中のIDの情報持ってきてね
+    @book = Book.find(params[:id])
+    # 探してきたデータ（レコード）を削除
+    @book.destroy
+    # 投稿一覧画面へリダイレクト
+    redirect_to books_path        
+  end
+
     private
   # ストロングパラメータ
   def book_params
     params.require(:book).permit(:title, :body)
   end
+  
 end

@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   def index
-    
-    # ユーザーの情報もってこい
+    # ログインしてるユーザーの情報＊これはUserinfoで使う
+    @user = current_user
+    # ユーザーの情報もってきてUsersで使う
     @users = User.all
     # 新規投稿のための箱
     @book = Book.new
@@ -9,9 +10,10 @@ class UsersController < ApplicationController
   
   def show
     @book = Book.new
-    @books = Book.all
-    # ユーザーの情報探してきて
+    # 特定のユーザーの情報URLから参照して探してきて
     @user = User.find(params[:id])
+    # ↑のユーザー情報からbooks情報もらう@booksで使えるようにする
+    @books = @user.books
   end
   
   def edit
@@ -20,9 +22,13 @@ class UsersController < ApplicationController
   end
   
   def update
-    user = User.find(params[:id])
-    user.update(user_params)
-    redirect_to user_path(user.id)
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      flash[:notice] = "You have updated user successfully."
+      redirect_to user_path(@user.id)
+    else
+    　render :edit
+    end
   end
   
   private

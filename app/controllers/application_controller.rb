@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+# ログインしてない人がアクセスするとログイン画面に戻る＊top,about画面は除く
+ before_action :authenticate_user!, except: [:top,:about ]
+
 # nameをデータとして保存できるように許可
   before_action :configure_permitted_parameters, if: :devise_controller?
 

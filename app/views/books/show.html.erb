@@ -1,20 +1,43 @@
-<h2>User infoｘ</h2>
+<p id="notice"><%= flash[:notice] %></p>
 
+<div>左に配置
+  <h1>Booksページ</h1>
+  <h2>User info</h2>
+<%= image_tag @user.get_profile_image(100, 100) %>
 
-
-<h2>New Bookｘ</h2>
-なんか中身入るshowアクションの @book = Book.new @book = Book.find(params[:id])が原因?
-  <%= form_with model: @book, url: '/books', method: :post do |f| %>
+<table>
+  <tbody>
+    <tr>
+      <th>name</th>
+      <th><%= @user.name %></th>
+    </tr>
+    <tr>
+      <th>introduction</th>
+      <th><%= @user.introduction %></th>
+    </tr>
+  </tbody>
+</table>
   
-    <div>Title</div>
-    <%= f.text_field :title %>
-  
-    <div>Opinion</div>
-    <%= f.text_area :body %>
-  
-    <div><%= f.submit 'Create Book' %></div>
+ <!--ユーザー編集へ↓-->
+ <div>
+  <%= link_to edit_user_path(@user.id) do %>
+    <i class="fa-solid fa-user-gear"></i>
   <% end %>
-
+</div> 
+  
+  <h2>New book</h2>
+     <!--indexアクションで作ったデータを入れる箱、空っぽなので送信すると自動的にcreate処理にいく-->
+    <%= form_with model: @book_new, url: '/books', method: :post do |f| %>
+    
+      <div>Title</div>
+      <%= f.text_field :title %>
+    
+      <div>Opinion</div>
+      <%= f.text_area :body %>
+    
+      <div><%= f.submit 'Create Book' %></div>
+    <% end %>
+</div>  
 
 
 <h2>Book detail</h2>
