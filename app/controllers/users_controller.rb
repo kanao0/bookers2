@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  # edit,updateはアクションする前にis_matching_login_userを実行
+  before_action :is_matching_login_user, only: [:edit, :update]
+  
   def index
     # ログインしてるユーザーの情報＊これはUserinfoで使う
     @user = current_user
@@ -27,7 +30,7 @@ class UsersController < ApplicationController
       flash[:notice] = "You have updated user successfully."
       redirect_to user_path(@user.id)
     else
-    　render :edit
+      render :edit
     end
   end
   
@@ -37,5 +40,12 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :profile_image, :introduction )
   end
   
+# 他人のユーザ情報編集画面にいけないようにするやつ
+  def is_matching_login_user
+    user = User.find(params[:id])
+    unless user.id == current_user.id
+      redirect_to user_path
+    end 
+  end
 
 end
