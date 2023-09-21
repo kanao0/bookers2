@@ -1,24 +1,31 @@
-<% if @user.errors.any? %>
-  <%= @user.errors.count %>error prohibited this obj from being saved:
-  <ul>
-    <% @user.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
-
-<h1>User info</h1>
-　<!--users editから-->
-<%= form_with model: @user do |f| %>
-
-  <div>Name</div>
-  <%= f.text_field :name %>
-  
-  <div>Image</div>
-  <%= f.file_field :profile_image, accept: "image/*" %>
-  
-  <div>Introduction</div>
-  <%= f.text_area :introduction %>
-  <br>
-  <%= f.submit "Update User" %>
-<% end %>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h1>User info</h1>
+      <% if @user.errors.any? %>
+        <%= @user.errors.count %>error prohibited this obj from being saved:
+        <ul>
+          <% @user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      <% end %>  
+      　<!--users editから-->
+      <%= form_with model: @user do |f| %>
+      
+        <div>Name</div>
+        <%= f.text_field :name %>
+        
+        <div>Image</div>
+        <%= f.file_field :profile_image, accept: "image/*" %>
+        
+        <div>Introduction</div>
+        <%= f.text_area :introduction %>
+        <br>
+        <%= f.submit "Update User" %>
+      <% end %>
+      </div>
+    </div>
+  </div>
+</main>

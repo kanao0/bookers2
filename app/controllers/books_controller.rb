@@ -1,5 +1,7 @@
 class BooksController < ApplicationController
+# edit,updateアクション前にis_matching_login_user実行
 before_action :is_matching_login_user, only: [:edit, :update]
+
   def index
     @book = Book.new
     # ログインしてるユーザーの情報これはUserinfoで使う
@@ -65,8 +67,11 @@ before_action :is_matching_login_user, only: [:edit, :update]
     params.require(:book).permit(:title, :body)
   end
 
+  
   def is_matching_login_user
+    # 今のURLの中のIDの情報持ってきてね
     book = Book.find(params[:id])
+    # 本を投稿した人がログインしてるユーザーじゃなかったら一覧ページへ
     unless book.user.id == current_user.id
       redirect_to books_path
     end 

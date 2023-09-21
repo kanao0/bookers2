@@ -1,26 +1,32 @@
-<%= form_with model: @book do |f| %>
-<% if @book.errors.any? %>
-  <%= @book.errors.count %>error prohibited this obj from being saved:
-  <ul>
-    <% @book.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
-<h2>Editing Book</h2>
+<main>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12 col-md-8 col-lg-5 px-5 px-sm-0 mx-auto">
+      <h2>Editing Book</h2>
 <!--IDの情報が入ってるから自動的にupdate処理にいく-->
-
-
-  <h4>Title</h4>
-  <%= f.text_field :title %>
-  
-  <h4>Opinion</h4>
-  <%= f.text_area :body %>
-  
-  <%= f.submit 'Update Book' %>
-  
-<% end %>
-
-
-<%= link_to "Show" , book_path %> | 
-<%= link_to "Back" , books_path %>
+        <%= form_with model: @book do |f| %>
+        <% if @book.errors.any? %>
+          <%= @book.errors.count %>error prohibited this obj from being saved:
+          <ul>
+            <% @book.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        <% end %>
+      
+        <h5>Title</h5>
+        <%= f.text_field :title %>
+        
+        <h5>Opinion</h5>
+        <%= f.text_area :body %>
+        
+        <%= f.submit 'Update Book' %>
+        
+      <% end %>
+      
+      <%= link_to "Show" , book_path %> | 
+      <%= link_to "Back" , books_path %>
+      </div>
+    </div>
+  </div>
+</main>
