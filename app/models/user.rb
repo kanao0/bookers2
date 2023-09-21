@@ -1,16 +1,18 @@
 class User < ApplicationRecord
-  validates :name, presence: true
-  
+  validates :name, presence: true,uniqueness: true
+  validates :name, length: { in: 2..20 }
+  validates :introduction, length: { maximum: 50 }
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
+
 # profile_imageという名前でActiveStorageで
 # プロフィール画像を保存できるように設定
-  has_one_attached :profile_image       
-  has_many :books, dependent: :destroy 
-  
+  has_one_attached :profile_image
+  has_many :books, dependent: :destroy
+
   # 画像が設定されない場合はdefault_image.jpgをデフォルト画像として格納
   # 画像あれば(width, height)指定して表示??
   # get_profile_image画像を表示する時に使う

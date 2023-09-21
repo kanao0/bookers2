@@ -1,61 +1,34 @@
-<h2>User info</h2>
-<%= image_tag @user.get_profile_image(100, 100) %>
+<main>
+<p id="notice"><%= flash[:notice] %></p>
+  <div class='container px-5 px-sm-0'>
+    <div class='row'>
+      <div class='col-md-3'>
+        <%= render 'books/index', user: @user,book: @book %>
+      </div>
 
-<table>
-  <tbody>
-    <tr>
-      <th>name</th>
-      <th><%= @user.name %></th>
-    </tr>
-    <tr>
-      <th>introduction</th>
-      <th><%= @user.introduction %></th>
-    </tr>
-  </tbody>
-</table>
-
-<div>ユーザー編集へ↓
-  <%= link_to edit_user_path(@user.id) do %>
-    <i class="fa-solid fa-user-gear"></i>
-  <% end %>
-</div> 
-
-<h2>New book</h2>
-   <!--indexアクションで作ったデータを入れる箱、空っぽなので送信すると自動的にcreate処理にいく-->
-  <%= form_with model: @book, url: '/books', method: :post do |f| %>
-
-    <div>Title</div>
-    <%= f.text_field :title %>
-
-    <div>Opinion</div>
-    <%= f.text_area :body %>
-
-    <div><%= f.submit 'Create Book' %></div>
-  <% end %>
-
-  <h2>Users</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>image</th>
-        <th>name</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-
-<!--users indexで作成したデータ入ってるやつ@users-->
-    <% @users.each do |user| %>
-      <tr>
-        <td><%= image_tag user.get_profile_image(100,100) %></td>
-        <td><%= user.name %></td>
-        <td><%= link_to "Show", user_path(user.id) %></td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
-</div>
-
-
-
-
+      <div class='col-md-8 offset-md-1'>
+        <h2>Users</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>image</th>
+              <th>name</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+      
+      <!--users indexで作成したデータ入ってるやつ@users-->
+          <% @users.each do |user| %>
+            <tr>
+              <td><%= image_tag user.get_profile_image(100,100) %></td>
+              <td><%= user.name %></td>
+              <td><%= link_to "Show", user_path(user.id) %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</main>     

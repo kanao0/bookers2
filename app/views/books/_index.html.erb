@@ -1,5 +1,5 @@
-<div>左に配置
-  <h2>User info</h2>
+
+<h2>User info</h2>
 <%= image_tag user.get_profile_image(100, 100) %>
 
 <table>
@@ -15,14 +15,15 @@
   </tbody>
 </table>
   
-<div>ユーザー編集へ↓
-  <%= link_to edit_user_path(user.id) do %>
-    <i class="fa-solid fa-user-gear"></i>
-  <% end %>
+<div>
+  <%= link_to edit_user_path(user.id),　class: "btn btn-outline-secondary btn-block" do %>
+  <i class="fa-solid fa-user-gear"></i> 
+　<% end %>
+  
 </div> 
 
 
-  <h2>New book</h2>
+  <h2 class="mt-3">New book</h2>
      <!--indexアクションで作ったデータを入れる箱、空っぽなので送信すると自動的にcreate処理にいく-->
     <%= form_with model: book, url: '/books', method: :post do |f| %>
     
@@ -34,4 +35,3 @@
     
       <div><%= f.submit 'Create Book' %></div>
     <% end %>
-</div>  

@@ -1,5 +1,5 @@
 class BooksController < ApplicationController
-
+before_action :is_matching_login_user, only: [:edit, :update]
   def index
     @book = Book.new
     # ログインしてるユーザーの情報これはUserinfoで使う
@@ -28,17 +28,16 @@ class BooksController < ApplicationController
 
 
   def show
-    # ログインしてるユーザーの情報＊これはUserinfoで使う
-    @user = current_user
+    # 本の情報をURLから取得
+    @book = Book.find(params[:id])
+    # 本を投稿したユーザーの情報＊これはUserinfoで使う
+    @user = @book.user
     # @bookふたつになるから@book_new部分テンプレは大丈夫
     @book_new = Book.new
-    # 今のURLの中のIDの情報持ってきてね
-    @book = Book.find(params[:id])
   end
 
   def edit
-    # 今のURLの中のIDの情報持ってきてね
-    @book = Book.find(params[:id])
+     @book = Book.find(params[:id])
   end
 
   def update
@@ -47,7 +46,7 @@ class BooksController < ApplicationController
       flash[:notice] = "You have updated book successfully."
       redirect_to book_path(@book.id)
     else
-      # render :edit
+      render :edit
     end
   end
 
@@ -65,5 +64,12 @@ class BooksController < ApplicationController
   def book_params
     params.require(:book).permit(:title, :body)
   end
-  
+
+  def is_matching_login_user
+    book = Book.find(params[:id])
+    unless book.user.id == current_user.id
+      redirect_to books_path
+    end 
+  end
+
 end

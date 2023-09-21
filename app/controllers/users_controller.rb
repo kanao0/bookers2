@@ -41,10 +41,11 @@ class UsersController < ApplicationController
   end
   
 # 他人のユーザ情報編集画面にいけないようにするやつ
+# 勝手に編集しようとするやつは自分のuser/indexページへ行く
   def is_matching_login_user
     user = User.find(params[:id])
     unless user.id == current_user.id
-      redirect_to user_path
+      redirect_to user_path(id: current_user.id)
     end 
   end
 
